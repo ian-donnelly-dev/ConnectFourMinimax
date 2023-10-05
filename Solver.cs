@@ -28,7 +28,7 @@ public class Solver
             {
                 return board.MovesPlayedPlayer2 - 22;
             }
-
+            
             return 0;
         }
 
@@ -36,16 +36,29 @@ public class Solver
         
         for (int col = 0; col < Constants.Columns; col++)
         {
-            if (board.ColumnHeights[col] < Constants.Rows)
-            {
-                board.MakeMove(col);
-                int score = Minimax(depth-1, !maximizingPlayer);
-                board.UnmakeMove(col);
+            if (board.ColumnHeights[col] >= Constants.Rows) continue;
+            
+            board.MakeMove(col);
+            int score = Minimax(depth-1, !maximizingPlayer);
+            board.UnmakeMove(col);
                 
-                bestScore = maximizingPlayer ? Math.Max(bestScore, score) : Math.Min(bestScore, score);
-            }
+            bestScore = maximizingPlayer ? Math.Max(bestScore, score) : Math.Min(bestScore, score);
         }
 
         return bestScore;
+    }
+    
+    public void RootMinimax()
+    {
+        for (int col = 0; col < Constants.Columns; col++)
+        {
+            if (board.ColumnHeights[col] >= Constants.Rows) continue;
+
+            board.MakeMove(col);
+            int score = Minimax(Constants.MaxDepth, !board.IsPlayer1Turn);
+            board.UnmakeMove(col);
+
+            Console.WriteLine($"Column: {col}, Score: {score}");
+        }
     }
 }

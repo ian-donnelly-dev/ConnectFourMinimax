@@ -58,6 +58,9 @@ namespace ConnectFourMinimax
                 board.UnmakeMove(lastMoveColumn);
                 board.MakeMove(lastMoveColumn);
             }, 1_000_000/2);
+
+            Solver solver = new Solver(board);
+            solver.RootMinimax();
         }
 
         private static void TimedAction(string description, Action action, int iterations)

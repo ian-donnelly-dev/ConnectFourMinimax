@@ -54,6 +54,8 @@ namespace ConnectFourMinimax
 
         public void UnmakeMove(int move)
         {
+            IsPlayer1Turn = !IsPlayer1Turn;
+            
             int stackHeight = ColumnHeights[move] - 1;
             
             if (stackHeight < 0)
@@ -74,7 +76,6 @@ namespace ConnectFourMinimax
             }
             
             ColumnHeights[move]--;
-            IsPlayer1Turn = !IsPlayer1Turn;
         }
 
         public bool CheckWin(ulong bitboard)
