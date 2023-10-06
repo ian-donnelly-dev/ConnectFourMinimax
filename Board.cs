@@ -68,11 +68,11 @@ namespace ConnectFourMinimax
             
             if (IsPlayer1Turn)
             {
-                MovesPlayedPlayer2--;
+                MovesPlayedPlayer1--;
             }
             else
             {
-                MovesPlayedPlayer1--;
+                MovesPlayedPlayer2--;
             }
             
             ColumnHeights[move]--;

@@ -58,9 +58,13 @@ namespace ConnectFourMinimax
                 board.UnmakeMove(lastMoveColumn);
                 board.MakeMove(lastMoveColumn);
             }, 1_000_000/2);
+            Console.WriteLine();
 
+            Console.WriteLine($"Minimax evaluations (max depth = {Constants.MaxDepth}) for each column:");
             Solver solver = new Solver(board);
-            solver.RootMinimax();
+            TimedAction("Finished processing", () => {
+                solver.RootMinimax();
+            }, 1);
         }
 
         private static void TimedAction(string description, Action action, int iterations)

@@ -55,7 +55,7 @@ public class Solver
             if (board.ColumnHeights[col] >= Constants.Rows) continue;
 
             board.MakeMove(col);
-            int score = Minimax(Constants.MaxDepth, !board.IsPlayer1Turn);
+            int score = Minimax(Constants.MaxDepth, board.IsPlayer1Turn);
             board.UnmakeMove(col);
 
             Console.WriteLine($"Column: {col}, Score: {score}");
