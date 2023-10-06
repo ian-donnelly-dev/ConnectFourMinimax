@@ -11,7 +11,7 @@ public class Solver
         this.board = board;
     }
 
-    private int Minimax(int depth, bool maximizingPlayer)
+    private int Minimax(int depth, bool maximizingPlayer, int alpha, int beta)
     {
         bool player1Won = !maximizingPlayer && board.CheckWin(board.Player1Bitboard);
         bool player2Won = maximizingPlayer && board.CheckWin(board.Player2Bitboard);
@@ -39,10 +39,24 @@ public class Solver
             if (board.ColumnHeights[col] >= Constants.Rows) continue;
             
             board.MakeMove(col);
-            int score = Minimax(depth-1, !maximizingPlayer);
+            int score = Minimax(depth-1, !maximizingPlayer, alpha, beta);
             board.UnmakeMove(col);
-                
-            bestScore = maximizingPlayer ? Math.Max(bestScore, score) : Math.Min(bestScore, score);
+            
+            if (maximizingPlayer)
+            {
+                bestScore = Math.Max(bestScore, score);
+                alpha = Math.Max(alpha, bestScore);
+            }
+            else
+            {
+                bestScore = Math.Min(bestScore, score);
+                beta = Math.Min(beta, bestScore);
+            }
+            
+            if (beta <= alpha)
+            {
+                break;
+            }
         }
 
         return bestScore;
@@ -55,7 +69,7 @@ public class Solver
             if (board.ColumnHeights[col] >= Constants.Rows) continue;
 
             board.MakeMove(col);
-            int score = Minimax(Constants.MaxDepth, board.IsPlayer1Turn);
+            int score = Minimax(Constants.MaxDepth, board.IsPlayer1Turn, -Constants.MaxValue, Constants.MaxValue);
             board.UnmakeMove(col);
 
             Console.WriteLine($"Column: {col}, Score: {score}");
